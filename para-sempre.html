@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Para Aline ❤️</title>
+
+<style>
+/* ===========================================================
+   VARIÁVEIS GLOBAIS — paleta "amor verdadeiro": vinho, rosa,
+   roxo e um toque de dourado para os brilhos mágicos.
+   =========================================================== */
+:root{
+  --bg-dark:    #1a0b2e;
+  --bg-wine:    #5e1132;
+  --bg-rose:    #a8265e;
+  --bg-purple:  #5a189a;
+  --accent-pink:#ff4d8d;
+  --accent-gold:#ffd9a0;
+  --text-cream: #fff5f8;
+  --text-soft:  #ffd6e8;
+
+  --font-script: "Brush Script MT","Lucida Handwriting","Segoe Script",cursive;
+  --font-heading: Georgia,"Times New Roman",serif;
+  --font-body: Georgia,"Cambria","Palatino Linotype",serif;
+}
+
+/* ===========================================================
+   RESET BÁSICO
+   =========================================================== */
+*{ margin:0; padding:0; box-sizing:border-box; }
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  font-family: var(--font-body);
+  color: var(--text-cream);
+  min-height:100vh;
+  overflow-x:hidden;
+  background:#1a0b2e;
+}
+
+body.no-scroll{ overflow:hidden; height:100vh; }
+
+::selection{ background:var(--accent-pink); color:#fff; }
+
+/* ===========================================================
+   FUNDO ANIMADO — degradê vivo em rosa / vermelho / roxo
+   =========================================================== */
+.bg-gradient{
+  position:fixed; inset:0; z-index:-3;
+  background:linear-gradient(135deg,
+      var(--bg-dark) 0%,
+      var(--bg-wine) 30%,
+      var(--bg-rose) 60%,
+      var(--bg-purple) 100%);
+  background-size:200% 200%;
+  animation:gradientShift 16s ease-in-out infinite;
+}
+@keyframes gradientShift{
+  0%   { background-position:0% 0%; }
+  50%  { background-position:100% 100%; }
+  100% { background-position:0% 0%; }
+}
+
+/* leve vinheta para dar profundidade premium */
+.bg-vignette{
+  position:fixed; inset:0; z-index:-2; pointer-events:none;
+  background:radial-gradient(ellipse at center, rgba(0,0,0,0) 40%, rgba(0,0,0,0.55) 100%);
+}
+
+/* ===========================================================
+   ESTRELAS — pontinhos brancos fixos que cintilam ao fundo
+   =========================================================== */
+.stars{ position:fixed; inset:0; z-index:-1; pointer-events:none; overflow:hidden; }
+.star{
+  position:absolute;
+  background:#fff;
+  border-radius:50%;
+  opacity:.25;
+  animation:twinkleStar ease-in-out infinite;
+}
+@keyframes twinkleStar{
+  0%,100%{ opacity:.15; transform:scale(1); }
+  50%    { opacity:.9;  transform:scale(1.4); }
+}
+
+/* ===========================================================
+   CORAÇÕES FLUTUANTES — sobem suavemente pela tela
+   =========================================================== */
+.hearts-bg{ position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
+.floating-heart{
+  position:absolute;
+  bottom:-10vh;
+  font-size:1.6rem;
+  filter:drop-shadow(0 0 6px rgba(255,77,141,.7));
+  opacity:0;
+  animation-name:floatUpHeart;
+  animation-timing-function:ease-in-out;
+  animation-fill-mode:forwards;
+  will-change:transform, opacity;
+}
+@keyframes floatUpHeart{
+  0%   { transform:translate(0,0) rotate(0deg);   opacity:0; }
+  10%  { opacity:.9; }
+  50%  { transform:translate(var(--drift), -55vh) rotate(var(--rot)); }
+  90%  { opacity:.7; }
+  100% { transform:translate(calc(var(--drift) * 1.6), -115vh) rotate(calc(var(--rot) * 2)); opacity:0; }
+}
+
+/* ===========================================================
+   PARTÍCULAS BRILHANTES — glitter mágico
+   =========================================================== */
+.sparkles{ position:fixed; inset:0; z-index:1; pointer-events:none; overflow:hidden; }
+.sparkle{
+  position:absolute;
+  width:6px; height:6px;
+  border-radius:50%;
+  background:radial-gradient(circle, #fff 0%, var(--accent-gold) 45%, transparent 80%);
+  opacity:0;
+  animation-name:sparkleLife;
+  animation-timing-function:ease-in-out;
+  animation-fill-mode:forwards;
+}
+@keyframes sparkleLife{
+  0%   { opacity:0; transform:scale(0); }
+  40%  { opacity:1; transform:scale(1.2); }
+  100% { opacity:0; transform:scale(0) translateY(-20px); }
+}
+
+/* ===========================================================
+   CORAÇÕES DE EXPLOSÃO — ao clicar na tela
+   =========================================================== */
+.explosion-heart{
+  position:fixed;
+  left:0; top:0;
+  z-index:50;
+  pointer-events:none;
+  will-change:transform, opacity;
+  animation:burstHeart .9s ease-out forwards;
+  text-shadow:0 0 8px rgba(255,77,141,.9);
+}
+@keyframes burstHeart{
+  0%   { transform:translate(0,0) scale(.4) rotate(0deg);   opacity:1; }
+  100% { transform:translate(var(--tx), var(--ty)) scale(1.1) rotate(var(--rot)); opacity:0; }
+}
+
+/* ===========================================================
+   BOTÃO DE MÚSICA — fixo, estilo "vidro" elegante
+   =========================================================== */
+.music-btn{
+  position:fixed;
+  top:18px; right:18px;
+  z-index:200;
+  width:56px; height:56px;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.35);
+  background:rgba(255,255,255,.10);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer;
+  box-shadow:0 4px 18px rgba(0,0,0,.35);
+  transition:transform .25s ease, box-shadow .25s ease, background .25s ease;
+}
+.music-btn:hover{ transform:scale(1.08); background:rgba(255,255,255,.18); }
+.music-btn:active{ transform:scale(.94); }
+.music-btn:focus-visible{ outline:2px solid var(--accent-gold); outline-offset:3px; }
+
+.music-icon{ display:flex; align-items:flex-end; gap:3px; height:18px; }
+.music-icon .bar{
+  width:4px; background:var(--text-cream); border-radius:2px;
+  height:6px;
+  transition:height .2s ease;
+}
+.music-btn.playing .bar{ animation:bounceBar 0.9s ease-in-out infinite; }
+.music-btn.playing .bar:nth-child(1){ animation-delay:0s; }
+.music-btn.playing .bar:nth-child(2){ animation-delay:.18s; }
+.music-btn.playing .bar:nth-child(3){ animation-delay:.36s; }
+@keyframes bounceBar{
+  0%,100%{ height:6px; }
+  50%    { height:18px; }
+}
+
+/* ===========================================================
+   TELA DE ABERTURA — "Tenho uma surpresa para você..."
+   =========================================================== */
+.intro-screen{
+  position:fixed; inset:0; z-index:100;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  text-align:center;
+  padding:0 20px;
+  background:radial-gradient(circle at 50% 50%, rgba(90,24,154,.55), rgba(26,11,46,.95));
+  transition:opacity 1s ease;
+}
+.intro-screen.fade-out{ opacity:0; pointer-events:none; }
+
+.intro-heart{
+  font-size:3.2rem;
+  margin-bottom:22px;
+  animation:pulseHeart 1.4s ease-in-out infinite;
+  filter:drop-shadow(0 0 18px rgba(255,77,141,.8));
+}
+.intro-heart.burst{
+  animation:heartBurstReveal .9s ease-out forwards;
+}
+@keyframes pulseHeart{
+  0%,100%{ transform:scale(1); }
+  50%    { transform:scale(1.18); }
+}
+@keyframes heartBurstReveal{
+  0%   { transform:scale(1);   filter:drop-shadow(0 0 18px rgba(255,77,141,.8)); }
+  60%  { transform:scale(2.6); filter:drop-shadow(0 0 50px rgba(255,217,160,1)); }
+  100% { transform:scale(3.4); opacity:0; }
+}
+
+.intro-text{
+  font-family:var(--font-heading);
+  font-style:italic;
+  font-size:clamp(1.3rem, 4vw, 2.1rem);
+  color:var(--text-soft);
+  min-height:1.6em;
+  letter-spacing:.5px;
+}
+
+/* cursor de "digitação" piscando */
+.typing-cursor::after{
+  content:"|";
+  display:inline-block;
+  margin-left:2px;
+  animation:blinkCursor .9s steps(1) infinite;
+}
+@keyframes blinkCursor{ 50%{ opacity:0; } }
+
+/* ===========================================================
+   CONTEÚDO PRINCIPAL
+   =========================================================== */
+.main-content{
+  position:relative; z-index:2;
+  opacity:0;
+  transition:opacity 1.4s ease;
+}
+.main-content.visible{ opacity:1; }
+.main-content.hidden-initial{ display:none; }
+
+section{
+  min-height:100vh;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  text-align:center;
+  padding:80px 24px;
+}
+
+/* --- HERO / TÍTULO --- */
+.hero{ gap:18px; }
+.title-typed{
+  font-family:var(--font-script);
+  font-size:clamp(2.4rem, 9vw, 5.2rem);
+  background:linear-gradient(90deg, var(--accent-gold), var(--accent-pink), var(--text-soft));
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  filter:drop-shadow(0 4px 18px rgba(255,77,141,.45));
+  min-height:1.3em;
+  line-height:1.3;
+}
+
+.scroll-hint{
+  margin-top:10px;
+  font-size:1.6rem;
+  opacity:.65;
+  animation:scrollBounce 1.8s ease-in-out infinite;
+  transition:opacity .6s ease;
+}
+@keyframes scrollBounce{
+  0%,100%{ transform:translateY(0); }
+  50%    { transform:translateY(10px); }
+}
+
+/* --- MENSAGEM PRINCIPAL --- */
+.message{ gap:26px; max-width:780px; }
+.line{
+  font-family:var(--font-body);
+  font-size:clamp(1.05rem, 2.6vw, 1.5rem);
+  line-height:1.6;
+  color:var(--text-cream);
+  opacity:0;
+  transform:translateY(22px);
+  transition:opacity .8s ease, transform .8s ease;
+  min-height:1.6em;
+}
+.line.revealed{ opacity:1; transform:translateY(0); }
+
+.line-strong{
+  font-weight:bold;
+  font-size:clamp(1.2rem, 3vw, 1.7rem);
+  color:var(--accent-gold);
+}
+
+.script-text{
+  font-family:var(--font-script);
+  font-size:clamp(2rem, 7vw, 3.6rem);
+  color:var(--text-soft);
+  text-shadow:0 0 24px rgba(255,77,141,.6);
+  margin-top:10px;
+}
+
+/* --- FINALE --- */
+.finale{ gap:18px; }
+.finale-title{
+  font-family:var(--font-heading);
+  font-weight:bold;
+  font-size:clamp(2rem, 8vw, 4.2rem);
+  color:var(--text-cream);
+  text-shadow:0 0 30px rgba(255,77,141,.8);
+  animation:glowPulse 3.2s ease-in-out infinite;
+  min-height:1.3em;
+}
+.finale-sub{
+  font-family:var(--font-script);
+  font-size:clamp(1.4rem, 5vw, 2.2rem);
+  color:var(--accent-gold);
+  min-height:1.4em;
+}
+@keyframes glowPulse{
+  0%,100%{ text-shadow:0 0 22px rgba(255,77,141,.6); }
+  50%    { text-shadow:0 0 42px rgba(255,217,160,.9); }
+}
+
+/* --- RODAPÉ --- */
+.footer{
+  padding:32px 20px 46px;
+  text-align:center;
+  font-size:.95rem;
+  color:var(--text-soft);
+  opacity:.85;
+  letter-spacing:.4px;
+}
+.footer span{ color:var(--accent-pink); }
+
+/* ===========================================================
+   RESPONSIVO
+   =========================================================== */
+@media (max-width:600px){
+  .music-btn{ width:48px; height:48px; top:14px; right:14px; }
+  section{ padding:60px 18px; min-height:90vh; }
+  .message{ gap:20px; }
+}
+
+@media (max-width:380px){
+  .intro-heart{ font-size:2.6rem; }
+  .title-typed{ font-size:clamp(2rem, 10vw, 3rem); }
+}
+
+/* ===========================================================
+   RESPEITA PREFERÊNCIA DE MOVIMENTO REDUZIDO
+   =========================================================== */
+@media (prefers-reduced-motion: reduce){
+  .bg-gradient, .floating-heart, .sparkle, .star,
+  .intro-heart, .scroll-hint, .finale-title, .music-btn.playing .bar{
+    animation:none !important;
+  }
+}
+</style>
+</head>
+<body class="no-scroll">
+
+<!-- ===========================================================
+     CAMADAS DE FUNDO (gradiente, vinheta, estrelas, corações,
+     partículas) — todas fixas e decorativas, sem cliques.
+     =========================================================== -->
+<div class="bg-gradient"></div>
+<div class="bg-vignette"></div>
+<div class="stars" id="stars"></div>
+<div class="hearts-bg" id="heartsBg"></div>
+<div class="sparkles" id="sparkles"></div>
+
+<!-- ===========================================================
+     BOTÃO DE MÚSICA
+     =========================================================== -->
+<button id="musicToggle" class="music-btn" aria-label="Tocar música de fundo" title="Tocar/Pausar música">
+  <span class="music-icon" aria-hidden="true">
+    <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+  </span>
+</button>
+
+<!-- ===========================================================
+     TELA DE ABERTURA
+     =========================================================== -->
+<div id="introScreen" class="intro-screen">
+  <div id="introHeart" class="intro-heart">❤️</div>
+  <p id="introText" class="intro-text"></p>
+</div>
+
+<!-- ===========================================================
+     CONTEÚDO PRINCIPAL
+     =========================================================== -->
+<main id="mainContent" class="main-content hidden-initial">
+
+  <!-- HERO -->
+  <section class="hero">
+    <h1 id="titleTyped" class="title-typed"></h1>
+    <div class="scroll-hint" id="scrollHint">↓ 💗</div>
+  </section>
+
+  <!-- MENSAGEM PRINCIPAL -->
+  <section class="message">
+    <p class="line line-strong" data-text="Oi, Aline!"></p>
+    <p class="line" data-text="Quis preparar esta pequena surpresa para colocar um sorriso no seu rosto. 😊"></p>
+    <p class="line" data-text="Ainda estamos nos conhecendo, mas já gostei muito de compartilhar esses momentos com você."></p>
+    <p class="line" data-text="Espero que a gente continue conversando, rindo e criando boas lembranças juntos."></p>
+    <p class="line" data-text="Que esta página seja apenas uma forma simples de dizer que você é uma pessoa especial."></p>
+    <h2 class="line script-text" data-text="🌹 Com carinho, Vinícius."></h2>
+  </section>
+
+  <!-- FINAL -->
+  <section class="finale">
+    <h2 id="finaleTitle" class="finale-title line" data-text="❤️ Para você, Aline. ❤️"></h2>
+  </section>
+
+  <!-- RODAPÉ -->
+  <footer class="footer">
+    <p>Feito especialmente para o amor da minha vida <span>❤️</span></p>
+  </footer>
+
+</main>
+
+<script>
+/* =====================================================================
+   PÁGINA ROMÂNTICA — script único, sem bibliotecas externas.
+   Seções: 1) utilidades  2) fundo animado  3) abertura  4) digitação
+   5) explosão de corações  6) música (Web Audio API)  7) inicialização
+   ===================================================================== */
+
+(function(){
+  "use strict";
+
+  /* -------------------------------------------------------------
+     1) UTILIDADES
+     ------------------------------------------------------------- */
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+
+  function rand(min, max){ return Math.random() * (max - min) + min; }
+
+  /* Efeito "máquina de escrever" letra por letra.
+     Usa Array.from para não quebrar emojis (pares substitutos). */
+  function typeText(el, text, speed, onDone){
+    if (prefersReducedMotion){
+      el.textContent = text;
+      if (onDone) onDone();
+      return;
+    }
+    const chars = Array.from(text);
+    let i = 0;
+    el.textContent = "";
+    el.classList.add("typing-cursor");
+
+    (function step(){
+      if (i < chars.length){
+        el.textContent += chars[i];
+        i++;
+        setTimeout(step, speed);
+      } else {
+        el.classList.remove("typing-cursor");
+        if (onDone) onDone();
+      }
+    })();
+  }
+
+  /* -------------------------------------------------------------
+     2) FUNDO ANIMADO — estrelas, corações flutuantes, brilhos
+     ------------------------------------------------------------- */
+  const starsContainer   = document.getElementById("stars");
+  const heartsContainer  = document.getElementById("heartsBg");
+  const sparklesContainer= document.getElementById("sparkles");
+  const HEART_GLYPHS = ["❤️","💕","💗","💖","💘","💜","💝"];
+
+  // Estrelas fixas, geradas uma única vez
+  function createStars(count){
+    const frag = document.createDocumentFragment();
+    for (let i = 0; i < count; i++){
+      const s = document.createElement("span");
+      s.className = "star";
+      const size = rand(1, 3);
+      s.style.width  = size + "px";
+      s.style.height = size + "px";
+      s.style.left = rand(0, 100) + "%";
+      s.style.top  = rand(0, 100) + "%";
+      s.style.animationDuration = rand(2, 5) + "s";
+      s.style.animationDelay = rand(0, 5) + "s";
+      frag.appendChild(s);
+    }
+    starsContainer.appendChild(frag);
+  }
+
+  // Um coração flutuante novo de tempos em tempos
+  function spawnFloatingHeart(){
+    const h = document.createElement("span");
+    h.className = "floating-heart";
+    h.textContent = HEART_GLYPHS[Math.floor(rand(0, HEART_GLYPHS.length))];
+    const left = rand(2, 95);
+    const size = rand(1.1, 2.6);
+    const duration = rand(9, 16);
+    const drift = rand(-60, 60) + "px";
+    const rot = rand(-40, 40) + "deg";
+
+    h.style.left = left + "%";
+    h.style.fontSize = size + "rem";
+    h.style.setProperty("--drift", drift);
+    h.style.setProperty("--rot", rot);
+    h.style.animationDuration = duration + "s";
+
+    heartsContainer.appendChild(h);
+    setTimeout(() => h.remove(), duration * 1000 + 200);
+  }
+
+  // Uma partícula brilhante (glitter mágico)
+  function spawnSparkle(){
+    const sp = document.createElement("span");
+    sp.className = "sparkle";
+    sp.style.left = rand(0, 100) + "%";
+    sp.style.top  = rand(0, 100) + "%";
+    const duration = rand(1.6, 3);
+    sp.style.animationDuration = duration + "s";
+    sparklesContainer.appendChild(sp);
+    setTimeout(() => sp.remove(), duration * 1000 + 100);
+  }
+
+  createStars(prefersReducedMotion ? 30 : 90);
+
+  let heartSpawnTimer, sparkleSpawnTimer;
+  function startAmbientLoops(){
+    if (prefersReducedMotion) return; // mantém o fundo calmo
+    heartSpawnTimer = setInterval(spawnFloatingHeart, 700);
+    sparkleSpawnTimer = setInterval(spawnSparkle, 350);
+  }
+
+  /* -------------------------------------------------------------
+     3) TELA DE ABERTURA — "Tenho uma surpresa para você..."
+     ------------------------------------------------------------- */
+  const introScreen = document.getElementById("introScreen");
+  const introText    = document.getElementById("introText");
+  const introHeart   = document.getElementById("introHeart");
+  const mainContent  = document.getElementById("mainContent");
+  const titleTyped   = document.getElementById("titleTyped");
+
+  let revealed = false;
+
+  function revealMainContent(){
+    if (revealed) return;
+    revealed = true;
+
+    introHeart.classList.add("burst");
+
+    setTimeout(() => {
+      introScreen.classList.add("fade-out");
+      document.body.classList.remove("no-scroll");
+
+      mainContent.classList.remove("hidden-initial");
+      // pequeno delay para garantir a transição de opacidade
+      requestAnimationFrame(() => mainContent.classList.add("visible"));
+
+      // digita o título principal
+      typeText(titleTyped, "❤️ Para Aline ❤️", 90);
+
+      // some a tela de abertura do DOM depois da transição
+      setTimeout(() => { introScreen.style.display = "none"; }, 1100);
+    }, 550);
+  }
+
+  function startIntro(){
+    typeText(introText, "Tenho uma surpresa para você...", 65, () => {
+      setTimeout(revealMainContent, 2000);
+    });
+  }
+
+  // permite pular a abertura tocando/clicando na tela
+  introScreen.addEventListener("click", revealMainContent);
+
+  /* -------------------------------------------------------------
+     4) DIGITAÇÃO DAS LINHAS AO ROLAR A PÁGINA
+     ------------------------------------------------------------- */
+  const lines = document.querySelectorAll(".line[data-text]");
+  const lineObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting){
+        const el = entry.target;
+        const text = el.getAttribute("data-text");
+        el.classList.add("revealed");
+        typeText(el, text, 26);
+        lineObserver.unobserve(el);
+      }
+    });
+  }, { threshold: 0.45 });
+
+  lines.forEach((el) => lineObserver.observe(el));
+
+  // some a dica de "rolar" assim que o usuário rolar a página
+  const scrollHint = document.getElementById("scrollHint");
+  window.addEventListener("scroll", () => {
+    if (scrollHint) scrollHint.style.opacity = "0";
+  }, { once: true, passive: true });
+
+  /* -------------------------------------------------------------
+     5) CORAÇÕES EXPLODINDO AO CLICAR NA TELA
+     ------------------------------------------------------------- */
+  function explodeHearts(x, y){
+    const count = prefersReducedMotion ? 4 : 10;
+    for (let i = 0; i < count; i++){
+      const h = document.createElement("span");
+      h.className = "explosion-heart";
+      h.textContent = HEART_GLYPHS[Math.floor(rand(0, HEART_GLYPHS.length))];
+
+      const angle = rand(0, Math.PI * 2);
+      const distance = rand(60, 160);
+      const tx = Math.cos(angle) * distance + "px";
+      const ty = Math.sin(angle) * distance + "px";
+      const rot = rand(-180, 180) + "deg";
+      const size = rand(1, 2.1);
+
+      h.style.left = x + "px";
+      h.style.top  = y + "px";
+      h.style.fontSize = size + "rem";
+      h.style.setProperty("--tx", tx);
+      h.style.setProperty("--ty", ty);
+      h.style.setProperty("--rot", rot);
+
+      document.body.appendChild(h);
+      setTimeout(() => h.remove(), 950);
+    }
+  }
+
+  document.addEventListener("click", (e) => {
+    explodeHearts(e.clientX, e.clientY);
+  });
+
+  /* -------------------------------------------------------------
+     6) MÚSICA ROMÂNTICA — gerada ao vivo com Web Audio API
+        (sem arquivos externos: uma pequena melodia em loop,
+        suave, em tons de "caixinha de música")
+     ------------------------------------------------------------- */
+  const musicBtn = document.getElementById("musicToggle");
+
+  let audioCtx, masterGain, droneOsc, droneGain;
+  let schedulerTimer = null;
+  let isPlaying = false;
+
+  const BEAT = 0.85;          // duração de uma batida, em segundos
+  const LOOP_BEATS = 16;      // tamanho do loop melódico
+
+  // melodia: [frequência Hz, início em batidas, duração em batidas]
+  const MELODY = [
+    [392.00, 0,  2],  // Sol4
+    [440.00, 2,  1],  // Lá4
+    [523.25, 3,  1],  // Dó5
+    [440.00, 4,  2],  // Lá4
+    [392.00, 6,  2],  // Sol4
+    [349.23, 8,  2],  // Fá4
+    [392.00, 10, 1],  // Sol4
+    [440.00, 11, 1],  // Lá4
+    [349.23, 12, 2],  // Fá4
+    [293.66, 14, 2],  // Ré4
+  ];
+
+  // notas de apoio graves, bem suaves
+  const BASS = [
+    [130.81, 0, 4],  // Dó3
+    [174.61, 4, 4],  // Fá3
+    [146.83, 8, 4],  // Ré3
+    [196.00, 12, 4], // Sol3
+  ];
+
+  function ensureAudioContext(){
+    if (!audioCtx){
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      masterGain = audioCtx.createGain();
+      masterGain.gain.value = 0.0001;
+      masterGain.connect(audioCtx.destination);
+    }
+  }
+
+  function playNote(freq, startTime, duration, peakVolume){
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = "sine";
+    osc.frequency.value = freq;
+
+    gain.gain.setValueAtTime(0.0001, startTime);
+    gain.gain.linearRampToValueAtTime(peakVolume, startTime + 0.08);
+    gain.gain.exponentialRampToValueAtTime(0.0001, startTime + duration);
+
+    osc.connect(gain);
+    gain.connect(masterGain);
+    osc.start(startTime);
+    osc.stop(startTime + duration + 0.05);
+  }
+
+  function scheduleLoop(){
+    const now = audioCtx.currentTime + 0.05;
+    MELODY.forEach(([freq, beat, dur]) => {
+      playNote(freq, now + beat * BEAT, dur * BEAT * 0.92, 0.10);
+    });
+    BASS.forEach(([freq, beat, dur]) => {
+      playNote(freq, now + beat * BEAT, dur * BEAT * 0.95, 0.045);
+    });
+    schedulerTimer = setTimeout(scheduleLoop, LOOP_BEATS * BEAT * 1000);
+  }
+
+  function startMusic(){
+    ensureAudioContext();
+    if (audioCtx.state === "suspended") audioCtx.resume();
+
+    const now = audioCtx.currentTime;
+    masterGain.gain.cancelScheduledValues(now);
+    masterGain.gain.linearRampToValueAtTime(0.28, now + 1.0);
+
+    scheduleLoop();
+    isPlaying = true;
+    musicBtn.classList.add("playing");
+    musicBtn.setAttribute("aria-label", "Pausar música de fundo");
+  }
+
+  function pauseMusic(){
+    if (!audioCtx) return;
+    const now = audioCtx.currentTime;
+    masterGain.gain.cancelScheduledValues(now);
+    masterGain.gain.linearRampToValueAtTime(0.0001, now + 0.7);
+
+    if (schedulerTimer) clearTimeout(schedulerTimer);
+    schedulerTimer = null;
+    isPlaying = false;
+    musicBtn.classList.remove("playing");
+    musicBtn.setAttribute("aria-label", "Tocar música de fundo");
+  }
+
+  musicBtn.addEventListener("click", () => {
+    if (isPlaying) pauseMusic(); else startMusic();
+  });
+
+  /* -------------------------------------------------------------
+     7) INICIALIZAÇÃO
+     ------------------------------------------------------------- */
+  window.addEventListener("DOMContentLoaded", () => {
+    startAmbientLoops();
+    startIntro();
+  });
+
+})();
+</script>
+</body>
+</html>
